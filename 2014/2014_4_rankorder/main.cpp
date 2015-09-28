@@ -2,58 +2,74 @@
  * File:   main.cpp
  * Author: Administrator
  *
- * Created on 2015年5月29日, 上午11:37
+ * Created on 2015年2月16日, 下午4:11
  */
 
 #include <cstdlib>
 #include<vector>
-#include<algorithm>
-#include<map>
 #include<iterator>
 #include<iostream>
+#include<fstream>
+
 using namespace std;
 
-/*
- * 
- */
-int main(int argc, char** argv) {
-    map<int, int>m1, m2;
-    int len;
-    cin>>len;
-    int record=len;
-    
-    for(int i=1;i<=len;i++){
-        int score;
-        cin>>score;
-        m1[score]=i;       
+int main() {
+    ifstream ifs;
+    vector< pair<int, int> >vP;
+    vector<int >v;
+    ifs.open("input.txt");
+    try {
+        if (ifs) {
+            int count = 0;
+            int save;
+            int k = 0;
+            while (ifs >> save) {
+                v.push_back(save);
+                int inP;
+                //注意循环的条件控制不是每次都从0开始
+                for (int i = 0 + k; i < k + save; i++) {//以save 的长度一段一段录入vP，先first
+                    ifs>>inP;
+                    vP.push_back(make_pair(inP, 0));
+                }
+                for (int i = 0 + k; i < k + save; i++) {//替换本段的 second数值
+                    ifs>>inP;
+                    vP[i].second = inP;
+                }
+                k = save + k;
+            }
+            cout << v[0];
+            int temp[2];
+            while (v.size() > 0) {
+                for (int i = 0; i < v[0]; i++) {
+                    for (int j = 0; j < v[0] - 1; j++) {
+                        if (vP[j].second < vP[j + 1].second) {
+                            temp[0] = vP[j].first;
+                            temp[1] = vP[j].second;
+                            vP[j].first = vP[j + 1].first;
+                            vP[j].second = vP[j + 1].second;
+                            vP[j + 1].first = temp[0];
+                            vP[j + 1].second = temp[1];
+                        }
+                    }
+                }
+                bool out = true;
+                for (int i = 0; i < v[0] - 1; i++) {
+                    if (vP[i].first < vP[i + 1].first) {
+                        cout << i + 1 << endl;
+                        out = false;
+                        break;
+                    }
+                }
+                if (out)
+                    cout << "agree" << endl;
+                //用完一段数据，删除对应的vector；
+                vP.erase(vP.begin(), vP.begin() + v[0]);
+                v.erase(v.begin());
+            }
+        } else throw "no this file";
+    } catch (const char* e) {
+        cout << e << endl;
     }
-//    for(map<int,int>::iterator iter=m1.begin();iter!=m1.end();iter++)
-//        cout<<iter->first<<"\t"<<iter->second<<endl;
-    for(int i=1;i<=len;i++){
-        int score;
-        cin>>score;
-        m2[score]=i;       
-    }
-//    for(map<int,int>::iterator iter=m2.begin();iter!=m2.end();iter++)
-//        cout<<iter->first<<"\t"<<iter->second<<endl;
-    map<int,int>::iterator iter1=m1.end();
-    map<int,int>::iterator iter2=m2.end();
-    int pos=1;
-    while(len>0){
-//        cout<<len<<" iter is "<<iter1->second<<endl;
-        if(iter1->second!=iter2->second){
-            pos=1;
-            cout<<iter1->second+1<<endl;       
-            break;
-        }
-        pos=0;
-        len--;
-        iter1--;
-        iter2--;    
-    }  
-    if(pos==0){
-        cout<<"agree"<<endl;
-    }  
+    ifs.close();
     return 0;
 }
-

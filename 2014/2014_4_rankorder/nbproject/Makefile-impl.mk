@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=2014_4_rankorder
+PROJECTNAME=test2
 
 # Active Configuration
 DEFAULTCONF=Debug
