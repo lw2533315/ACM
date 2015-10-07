@@ -67,9 +67,7 @@ int main(int argc, char** argv) {
                     direction = k;
                     go = true;
                     move(p, i, j, v, direction, count, empty, go);
-                }
-            }
-            if (!go) {//当不能走完时，还原数组，以便下个点使用
+					if (!go) {//当不能走完时，还原数组，以便下个点使用
                 go = true;
                 for (int i = 0; i < row + 2; i++) {
                     for (int j = 0; j < col + 2; j++) {
@@ -77,6 +75,9 @@ int main(int argc, char** argv) {
                     }
                 }
             }
+                }
+            }
+            
         }
     }
     for (int i = 0; i < v.size(); i++) {
