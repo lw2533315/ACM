@@ -1,0 +1,10 @@
+mom: upper-upper-lower-middle class
+dad: middle-middle-middle-lower-middle class
+queen elizabeh: upper-upper-upper class
+c: lower-middle-lower class
+chair: lower-lower class
+uncle bob: middle-middle-lower-middle class
+aaa: lower-middle-lower class
+ccc: lower-middle-lower class
+test: middle-middle-middle-middle-middle-middle-upper-upper
+test1: upper
