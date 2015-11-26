@@ -13,11 +13,11 @@
 
 using namespace std;
 
-void quickSort(vector<pair<string, long double> >&v, int l, int r) {
+void quickSort(vector<pair<string, string> >&v, int l, int r) {
     if (l < r) {
         int i = l;
         int j = r;
-        vector< pair<string, long double> >x(1);
+        vector< pair<string, string> >x(1);
         x[0] = v[l];
         while (i < j) {
 //            cout << "outer loop" << endl;
@@ -61,7 +61,7 @@ void quickSort(vector<pair<string, long double> >&v, int l, int r) {
 int main(int argc, char** argv) {
     ifstream ifs;
     ifs.open("input.txt");
-    vector<pair<string, long double> >v;
+    vector<pair<string, string> >v;
     string str;
     while (getline(ifs, str)) {
         int nameIndex = str.find(':');
@@ -81,6 +81,7 @@ int main(int argc, char** argv) {
         }
         //        cout<<str<<endl;
         len = str.length();
+		string cmpS="";
         double coef = 1;
         long double count = 0;
         int pos = len - 1;
@@ -89,25 +90,26 @@ int main(int argc, char** argv) {
             //            cout<<"xishu is "<<coef<<endl;
             if (str[i] == '-') {
                 if (str[i + 1] == 'u') {
-                    count = count + 3 * coef;
+                    cmpS=cmpS+"3";
                 } else if (str[i + 1] == 'm') {
-                    count = count + 2 * coef;
-                } else count = count + 1 * coef;
-                coef *= (1.0 / 4);
+                    cmpS=cmpS+"2";
+                } else cmpS=cmpS+"1";
             }
             if (i == 0) {
                 if (str[i] == 'u') {
-                    count = count + 3 * coef;
+                    cmpS=cmpS+"3";
                 } else if (str[i] == 'm') {
-                    count = count + 2 * coef;
-                } else count = count + 1 * coef;
-                coef = coef * (1.0 / 4);
+                    cmpS=cmpS+"2";
+                } else  cmpS=cmpS+"1";
             }
         }
         //        cout<<"count is "<<count<<endl;
-        v.push_back(make_pair(name, count));
+        v.push_back(make_pair(name, cmpS));
 
     }
+	for(int i=0;i<v.size();i++){
+		cout<<v[i].first<<" "<<v[i].second<<endl;
+	}
     quickSort(v, 0, v.size() - 1);
     for (int i = 0; i < v.size(); i++)
         cout << v[i].first <<endl;
